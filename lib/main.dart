@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ovo_clone/model/menu.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ovo_clone/pln.dart';
+import 'package:ovo_clone/pulsa.dart';
 
 void main() => runApp(const MyApp());
 
@@ -22,6 +24,18 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void tapped(BuildContext context, int index) {
+    if(index == 0){
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const PLN(id: 0,);
+      }));
+    } else if(index == 1) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Pulsa();
+      }));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -223,27 +237,30 @@ class HomeScreen extends StatelessWidget {
                 itemCount: menuList.length,
                 itemBuilder: (context, index) {
                   final Menu menu = menuList[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(50),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Colors.grey,
-                                    spreadRadius: 0.5
-                                )
-                              ]
+                  return InkWell(
+                    onTap: () => tapped(context, index),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(50),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      spreadRadius: 0.5
+                                  )
+                                ]
+                            ),
+                            child: Image.asset(menu.photo),
                           ),
-                          child: Image.asset(menu.photo),
-                        ),
-                        Text(menu.name)
-                      ],
+                          Text(menu.name)
+                        ],
+                      ),
                     ),
                   );
                 }
